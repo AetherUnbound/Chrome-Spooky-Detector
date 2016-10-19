@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+
+    "name": "So Spooky",
+    "description": "Will play a spooky song when spookiness on page is detected",
+    "version": "1.0",
+
+    "browser_action": {
+        "default_icon": "skull.png",
+        "default_popup": "popup.html",
+        "default_title": "Spooky Detector Active"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["getDOM.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "https://ajax.googleapis.com/",
+        "http://*/*", "https://*/*"
+    ],
+}
+
