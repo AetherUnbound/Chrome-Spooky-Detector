@@ -19,10 +19,12 @@ port.onMessage.addListener(function(msg) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	console.log(sender.tab ? "Message from somewhere else" : "Message from extension");
 	if (request.detail == "DOM") {
-		sendResponse(document.body); //.textContent);
+		sendResponse(document.body.innerText); //.textContent);
+		console.log(document.body.innerText);
 	}
-	else
+	else{
 		console.log("Request detail mismatch");
+	}
 });
 
 

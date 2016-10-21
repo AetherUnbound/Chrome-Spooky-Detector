@@ -1,4 +1,5 @@
 var activeTab = 0;
+var bodyText;
 
 //Listener for the connection call from the content script
 chrome.runtime.onConnect.addListener(function(port) {
@@ -20,15 +21,17 @@ chrome.runtime.onConnect.addListener(function(port) {
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     console.log("Sender " + sender);
     console.log("Request " + request.deatil);
-    sendResponse({detail: "active", active: activeTab});
+    console.log("Sent body " + bodyText.innerHTML);
+    sendResponse({detail: "active", active: activeTab, body: bodyText.innerHTML});
 });
 
 //Listener for when the active tab is switched
 chrome.tabs.onActivated.addListener(function(active) {
 	activeTab = active.tabId;
 	console.log("Tab ID " + activeTab);
-	chrome.tabs.sendMessage(activeTab, {detail: "DOM"}, function(body) {
-		console.log("Body \n" + body);
+	chrome.tabs.sendMessage(activeTab, {detail: "DOM"}, function sendResponse(body) {
+		bodyText = body;
+		console.log("Body \n" + bodyText);
 	});
 });
 
