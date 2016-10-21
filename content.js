@@ -16,3 +16,13 @@ port.onMessage.addListener(function(msg) {
         console.log("Something went wrong, content");
 });
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	console.log(sender.tab ? "Message from somewhere else" : "Message from extension");
+	if (request.detail == "DOM") {
+		sendResponse(document.body); //.textContent);
+	}
+	else
+		console.log("Request detail mismatch");
+});
+
+

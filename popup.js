@@ -3,8 +3,8 @@ chrome.extension.sendRequest({detail: "info"}, function handler(response) {
         console.log("Empty response");
         document.getElementById("spooks").innerHTML = "Empty response";
     }
-    else if (response.detail == "data") {
-        document.getElementById("spooks").innerHTML = "test";
+    else if (response.detail == "active") {
+        document.getElementById("spooks").innerHTML = response.active;
         console.log("good response");
     }
     else

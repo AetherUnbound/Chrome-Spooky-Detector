@@ -1,3 +1,6 @@
+var activeTab = 0;
+
+//Listener for the connection call from the content script
 chrome.runtime.onConnect.addListener(function(port) {
     console.log("Port name: " + port.name);
     port.onMessage.addListener(function(msg) {
@@ -8,18 +11,24 @@ chrome.runtime.onConnect.addListener(function(port) {
         else if (msg.text == "Confirmed") {
             console.log("Connection confirmed, good to go!");
         }
-        else if (msg.text == "Popup") {
-            console.log("Connection to popup confirmed");
-        }
         else
             console.log("Something went wrong, background");
     });
 });
 
-chrome.extension.onRequest.addListener( function(request, sender, sendResponse) {
+//Listener for when popup.js requests something
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     console.log("Sender " + sender);
     console.log("Request " + request.deatil);
-    sendResponse({detail: "data"});
+    sendResponse({detail: "active", active: activeTab});
 });
 
+//Listener for when the active tab is switched
+chrome.tabs.onActivated.addListener(function(active) {
+	activeTab = active.tabId;
+	console.log("Tab ID " + activeTab);
+	chrome.tabs.sendMessage(activeTab, {detail: "DOM"}, function(body) {
+		console.log("Body \n" + body);
+	});
+});
 
