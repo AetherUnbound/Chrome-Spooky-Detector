@@ -13,17 +13,22 @@
 
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["getDOM.js"],
+            "matches": ["<all_urls>"],
+            "js": ["content.js"],
             "run_at": "document_end"
         }
     ],
+    
+    "background": {
+        "scripts": ["background.js"]
+    },
 
     "permissions": [
         "activeTab",
         "tabs",
+        "storage",
         "https://ajax.googleapis.com/",
-        "http://*/*", "https://*/*"
-    ],
+        "<all_urls>"
+    ]
 }
 
