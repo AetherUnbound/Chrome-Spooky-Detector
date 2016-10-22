@@ -1,6 +1,14 @@
 var activeTab = 0;
 var bodyText;
 
+function getSpooks(activeTab) {
+	chrome.tabs.sendMessage(activeTab, {detail: "count"}, function sendResponse(count) {
+		if(count != null) {
+			console.log("Number of spooks on page: " + count);
+		}
+	});
+}
+
 //Listener for the connection call from the content script
 chrome.runtime.onConnect.addListener(function(port) {
     console.log("Port name: " + port.name);
@@ -29,9 +37,9 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 chrome.tabs.onActivated.addListener(function(active) {
 	activeTab = active.tabId;
 	console.log("Tab ID " + activeTab);
-	chrome.tabs.sendMessage(activeTab, {detail: "DOM"}, function sendResponse(body) {
-		bodyText = body;
-		console.log("Body \n" + bodyText);
-	});
+	getSpooks(activeTab);
 });
 
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+	getSpooks(tabId);
+});
