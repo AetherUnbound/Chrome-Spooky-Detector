@@ -1,10 +1,11 @@
 var activeTab = 0;
-var bodyText;
+var spookCount = 0;
 
 function getSpooks(activeTab) {
 	chrome.tabs.sendMessage(activeTab, {detail: "count"}, function sendResponse(count) {
 		if(count != null) {
 			console.log("Number of spooks on page: " + count);
+			spookCount = count;
 		}
 	});
 }
@@ -27,10 +28,11 @@ chrome.runtime.onConnect.addListener(function(port) {
 
 //Listener for when popup.js requests something
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    console.log("Sender " + sender);
-    console.log("Request " + request.deatil);
-    console.log("Sent body " + bodyText.innerHTML);
-    sendResponse({detail: "active", active: activeTab, body: bodyText.innerHTML});
+	getSpooks(activeTab);
+	console.log("Sender " + sender);
+	console.log("Request " + request.deatil);
+	console.log("Sent body " + spookCount);
+	sendResponse({detail: "active", active: activeTab, count: spookCount});
 });
 
 //Listener for when the active tab is switched
