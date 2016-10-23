@@ -37,8 +37,8 @@ window.onload = function() {
 	}
 
 	//compliance with chrome's extension CSP
-	document.getElementById("play").onclick=sound.playSound;
-	document.getElementById("stop").onclick=sound.stopSound;
+	document.getElementById("play").addEventListener('click', playSound);
+	document.getElementById("stop").addEventListener('click', stopSound);
 
 	chrome.extension.sendRequest({detail: "info"}, function handler(response) {
 	    if (response == null) {
