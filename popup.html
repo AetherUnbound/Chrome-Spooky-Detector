@@ -3,15 +3,19 @@
     <head>
         <title>Spooky Detector</title>
         <script src="popup.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
+	<link rel="stylesheet" href="popup.css">
     </head>
     <body>
-        <h1>Spooky Detector</h1>
+    	<div style="border-top: 75px">
+        <h1 id="title">Spooky Detector</h1>
         <p>Spooks on page: <span id="spooks"></span></p>
-        <audio id="spook_sound" controls preload="none">
-            <source src="spooky_scary_skeletons.mp3" type="audio/mpeg">
-        </audio>
-	<!--these don't work due to chrome's extension security policy-->
-        <button id="play">Play Spook</button>
-        <button id="stop">Stop Spook</button>
+	<button class="spook_button" id="play">Play Spook</button>
+	<button class="spook_button" id="pause">Pause Spook</button>
+	<button class="spook_button" id="stop">Stop Spook</button>
+	<div id="spooky_stuff">
+		<img src="skele.gif">
+	</div>
+	</div>
     </body>
 </html>
