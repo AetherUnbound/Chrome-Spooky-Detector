@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
 
-    "name": "So Spooky",
+    "name": "Spooky Detector",
     "description": "Will play a spooky song when spookiness on page is detected",
     "version": "1.0",
 
