@@ -6,10 +6,16 @@ window.onload = function() {
 	try{
 		var allElements = document.getElementsByTagName("*");
 		var sound = document.getElementById("spook_sound");
+		sound.loop = true;
 	}
 	catch(err) {
 		console.log("issue with declaring");
 	}
+
+	sound.addEventListener('ended', function(){
+		sound.currentTime = 0;
+		playSound();
+	}, false);
 
 	function playSound() {
 		if(stoppedTabs[activeTab] === undefined)
@@ -30,8 +36,8 @@ window.onload = function() {
 
 	function setVolume(count) {
 		volume = 0;
-		if (count < 25)
-			volume = count/25;
+		if (count < 40)
+			volume = count/40;
 		else 
 			volume = 1;
 		sound.volume = volume

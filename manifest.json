@@ -3,7 +3,7 @@
 
     "name": "Spooky Detector",
     "description": "Plays a spooky song when spookiness on page is detected",
-    "version": "1.0.4",
+    "version": "1.0.5",
 
     "browser_action": {
         "default_icon": "skull128.png",
