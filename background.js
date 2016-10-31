@@ -43,14 +43,19 @@ window.onload = function() {
 			if(count != null) {
 				console.log("Number of spooks on page: " + count + ", " + play);
 				spookCount = count;
-			}	
-			if(play){
-				if (spookCount > 0) {
-					setVolume(spookCount);
-					playSound();
+				if(play){
+					if (spookCount > 0) {
+						setVolume(spookCount);
+						playSound();
+					}
+					else
+						pauseSound();
 				}
-				else
-					pauseSound();
+			}
+			else {
+				console.log("Unregistered tab, pausing");
+				pauseSound();
+				spookCount = 0;
 			}
 		});
 	}

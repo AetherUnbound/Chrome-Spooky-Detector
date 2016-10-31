@@ -7,6 +7,7 @@ window.onload = function() {
 	    }
 	    else if (response.detail == "active") {
 		spookCount = response.count;
+		console.log("Response count" + spookCount);
 		document.getElementById("spooks").innerHTML = spookCount;
 		if(spookCount == 0) {
 			document.getElementById("spooky_stuff").style.display ='none';

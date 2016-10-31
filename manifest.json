@@ -2,8 +2,8 @@
     "manifest_version": 2,
 
     "name": "Spooky Detector",
-    "description": "Will play a spooky song when spookiness on page is detected",
-    "version": "1.0.3",
+    "description": "Plays a spooky song when spookiness on page is detected",
+    "version": "1.0.4",
 
     "browser_action": {
         "default_icon": "skull128.png",
