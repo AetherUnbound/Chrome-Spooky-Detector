@@ -1,8 +1,8 @@
 window.onload = function() {
 
-	function calculateSpooks() {
+	function calculatePumpkins() {
 		var text = String(document.body.innerText);
-		return (text.match(/spook/ig) || []).length;
+		return (text.match(/pumpkin/ig) || []).length;
 	}
 
 	var port = chrome.runtime.connect({name: "DOM_retrieval"});
@@ -24,9 +24,9 @@ window.onload = function() {
 			sendResponse(document.body.innerText);
 		}
 		else if (request.detail == "count") {
-			spookCount = calculateSpooks();
-			console.log(spookCount);
-			sendResponse(spookCount);
+			pumpkinCount = calculatePumpkins();
+			console.log(pumpkinCount);
+			sendResponse(pumpkinCount);
 		}
 		else{
 			console.log("Request detail mismatch");

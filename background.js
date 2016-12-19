@@ -1,11 +1,11 @@
 window.onload = function() {
 	var activeTab = 0;
-	var spookCount = 0;
+	var pumpkinCount = 0;
 	var stoppedTabs = {};
 
 	try{
 		var allElements = document.getElementsByTagName("*");
-		var sound = document.getElementById("spook_sound");
+		var sound = document.getElementById("pumpkin_sound");
 		sound.loop = true;
 	}
 	catch(err) {
@@ -44,14 +44,14 @@ window.onload = function() {
 		console.log("Volume: " + volume);
 	}
 
-	function getSpooks(activeTab, play = true) {
+	function getGourds(activeTab, play = true) {
 		chrome.tabs.sendMessage(activeTab, {detail: "count"}, function sendResponse(count) {
 			if(count != null) {
-				console.log("Number of spooks on page: " + count + ", " + play);
-				spookCount = count;
+				console.log("Number of pumpkins on page: " + count + ", " + play);
+				pumpkinCount = count;
 				if(play){
-					if (spookCount > 0) {
-						setVolume(spookCount);
+					if (pumpkinCount > 0) {
+						setVolume(pumpkinCount);
 						playSound();
 					}
 					else
@@ -61,7 +61,7 @@ window.onload = function() {
 			else {
 				console.log("Unregistered tab, pausing");
 				pauseSound();
-				spookCount = 0;
+				pumpkinCount = 0;
 			}
 		});
 	}
@@ -86,21 +86,21 @@ window.onload = function() {
 	chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		console.log("Sender " + sender);
 		console.log("Request " + request.detail);
-		getSpooks(activeTab, false);
-		console.log("Sent body " + spookCount);
-		sendResponse({detail: "active", active: activeTab, count: spookCount});
+		getGourds(activeTab, false);
+		console.log("Sent body " + pumpkinCount);
+		sendResponse({detail: "active", active: activeTab, count: pumpkinCount});
 	});
 
 	//Listener for when the active tab is switched
 	chrome.tabs.onActivated.addListener(function(active) {
 		activeTab = active.tabId;
 		console.log("Tab ID " + activeTab);
-		getSpooks(activeTab);
+		getGourds(activeTab);
 
 	});
 
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-		getSpooks(tabId);
+		getGourds(tabId);
 	});
 
 
