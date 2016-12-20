@@ -3,18 +3,18 @@ window.onload = function() {
 	chrome.extension.sendRequest({detail: "info"}, function handler(response) {
 	    if (response == null) {
 		console.log("Empty response");
-		document.getElementById("spooks").innerHTML = "Empty response";
+		document.getElementById("santas").innerHTML = "Empty response";
 	    }
 	    else if (response.detail == "active") {
-		spookCount = response.count;
-		console.log("Response count" + spookCount);
-		document.getElementById("spooks").innerHTML = spookCount;
-		if(spookCount == 0) {
-			document.getElementById("spooky_stuff").style.display ='none';
+		santaCount = response.count;
+		console.log("Response count" + santaCount);
+		document.getElementById("santas").innerHTML = santaCount;
+		if(santaCount == 0) {
+			document.getElementById("santa_stuff").style.display ='none';
 			//document.getElementById("title").style.paddingTop = '75px';
 		}
 		else {
-			document.getElementById("spooky_stuff").style.visibility='block';
+			document.getElementById("santa_stuff").style.visibility='block';
 			//document.getElementById("title").style.paddingTop = '25px';
 		}
 		console.log("good response");
@@ -31,7 +31,7 @@ window.onload = function() {
 		chrome.extension.sendMessage({action: "stop"});
 	});
 
-	document.getElementById("pause").addEventListener('click', function() {
-		chrome.extension.sendMessage({action: "pause"});
+	document.getElementById("snow").addEventListener('click', function() {
+		chrome.extension.sendMessage({action: "toggleSnow"});
 	});
 }

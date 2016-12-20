@@ -1,11 +1,11 @@
 window.onload = function() {
 	var activeTab = 0;
-	var spookCount = 0;
+	var santaCount = 0;
 	var stoppedTabs = {};
 
 	try{
 		var allElements = document.getElementsByTagName("*");
-		var sound = document.getElementById("spook_sound");
+		var sound = document.getElementById("santa_sound");
 		sound.loop = true;
 	}
 	catch(err) {
@@ -28,6 +28,13 @@ window.onload = function() {
 		sound.pause();
 	}
 
+	function toggleSnow() {
+		chrome.tabs.query({active: true}, function (active) {
+			activeTab = active.tabId;
+			alert("Snow Toggle Tab: " + activeTab);
+		});
+	}
+
 	function stopSound() {
 		stoppedTabs[activeTab] = 1;
 		sound.pause();
@@ -44,14 +51,14 @@ window.onload = function() {
 		console.log("Volume: " + volume);
 	}
 
-	function getSpooks(activeTab, play = true) {
+	function getSantas(activeTab, play = true) {
 		chrome.tabs.sendMessage(activeTab, {detail: "count"}, function sendResponse(count) {
 			if(count != null) {
-				console.log("Number of spooks on page: " + count + ", " + play);
-				spookCount = count;
+				console.log("Number of Santas on page: " + count + ", " + play);
+				santaCount = count;
 				if(play){
-					if (spookCount > 0) {
-						setVolume(spookCount);
+					if (santaCount > 0) {
+						setVolume(santaCount);
 						playSound();
 					}
 					else
@@ -61,7 +68,7 @@ window.onload = function() {
 			else {
 				console.log("Unregistered tab, pausing");
 				pauseSound();
-				spookCount = 0;
+				santaCount = 0;
 			}
 		});
 	}
@@ -86,21 +93,21 @@ window.onload = function() {
 	chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		console.log("Sender " + sender);
 		console.log("Request " + request.detail);
-		getSpooks(activeTab, false);
-		console.log("Sent body " + spookCount);
-		sendResponse({detail: "active", active: activeTab, count: spookCount});
+		getSantas(activeTab, false);
+		console.log("Sent body " + santaCount);
+		sendResponse({detail: "active", active: activeTab, count: santaCount});
 	});
 
 	//Listener for when the active tab is switched
 	chrome.tabs.onActivated.addListener(function(active) {
 		activeTab = active.tabId;
 		console.log("Tab ID " + activeTab);
-		getSpooks(activeTab);
+		getSantas(activeTab);
 
 	});
 
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-		getSpooks(tabId);
+		getSantas(tabId);
 	});
 
 
@@ -111,8 +118,8 @@ window.onload = function() {
 		else if (request.action == "stop") {
 			stopSound();
 		}
-		else if (request.action == "pause") {
-			pauseSound();
+		else if (request.action == "toggleSnow") {
+			toggleSnow();
 		}
 		else
 			console.log("Unrecognized action");

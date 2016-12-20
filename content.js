@@ -1,11 +1,14 @@
 window.onload = function() {
 
-	function calculateSpooks() {
+	function calculateSantas() {
 		var text = String(document.body.innerText);
-		return (text.match(/spook/ig) || []).length;
+		return (text.match(/santa/ig) || []).length;
 	}
 
 	var port = chrome.runtime.connect({name: "DOM_retrieval"});
+
+	snowStorm.autoStart = false;
+	snowStorm.toggleSnow();
 
 	console.log("Port initialized");
 	port.postMessage({text: "Connecting"});
@@ -24,9 +27,9 @@ window.onload = function() {
 			sendResponse(document.body.innerText);
 		}
 		else if (request.detail == "count") {
-			spookCount = calculateSpooks();
-			console.log(spookCount);
-			sendResponse(spookCount);
+			santaCount = calculateSantas();
+			console.log(santaCount);
+			sendResponse(santaCount);
 		}
 		else{
 			console.log("Request detail mismatch");

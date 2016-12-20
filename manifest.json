@@ -1,26 +1,26 @@
 {
     "manifest_version": 2,
 
-    "name": "Spooky Detector",
-    "description": "Plays a spooky song when spookiness on page is detected",
-    "version": "1.0.5",
+    "name": "Santa Detector",
+    "description": "Plays a Christmas song when Santa is found climbing the chimney into your browser!",
+    "version": "1.0.0",
 
     "browser_action": {
-        "default_icon": "skull128.png",
+        "default_icon": "santa128.png",
         "default_popup": "popup.html",
-        "default_title": "Spooky Detector Active"
+        "default_title": "Santa Detector Active"
     },
 
-    "icons" : { "16" : "skull16.png",
-                "32" : "skull32.png",
-                "48" : "skull48.png",
-               "128" : "skull128.png"
+    "icons" : { "16" : "santa16.png",
+                "32" : "santa32.png",
+                "48" : "santa48.png",
+               "128" : "santa128.png"
     },
 
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["content.js"],
+            "js": ["snowstorm.js", "content.js"],
             "run_at": "document_end"
         }
     ],
